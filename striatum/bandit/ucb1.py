@@ -7,7 +7,7 @@ import numpy as np
 import six
 
 from striatum.bandit.bandit import BaseBandit
-
+import random
 
 class UCB1(BaseBandit):
     r"""Upper Confidence Bound 1
@@ -65,7 +65,8 @@ class UCB1(BaseBandit):
                                   / action_times[action_id])
             estimated_reward_dict[action_id] = estimated_reward
             uncertainty_dict[action_id] = uncertainty
-            score_dict[action_id] = estimated_reward + uncertainty
+            eps = round(random.uniform(0.00000001, 0.00000002), 10)
+            score_dict[action_id] = estimated_reward + uncertainty + eps
         return estimated_reward_dict, uncertainty_dict, score_dict
 
     def get_action(self, context=None, n_actions=None):
